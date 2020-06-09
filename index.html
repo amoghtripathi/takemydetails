@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    
+    <section class="container">
+        <div class="content">
+            <h1>Scroll to begin</h1>
+            <p>start it like this....</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="content">
+            <h1>Amogh Tripathi</h1>
+            <p>Frontend Developer, whom you can trust 24*7*365.</p>
+        </div>
+    </section>
+    <section class="container">
+        <div class="content">
+            <h1>Current CTC: 3.5LPA</h1>
+            <p>Expected CTC: 4.5 - 5LPA</p>
+        </div>
+    </section>
+    <section class="container">
+        <div class="content">
+            <h1>Notice Period: 30 days</h1>
+            <p>can be worked on</p>
+        </div>
+    </section>
+    <section class="container">
+        <div class="content">
+            <h1>Web Development Skills</h1>
+            <p>Corona Ninja: <a href="https://gracious-hopper-4ca9d7.netlify.app/">(here)</a> made with VueJs</p>
+            <p>ToDoey : <a href="https://fierce-harbor-81224.herokuapp.com/">(here)</a> small fullstack web app made with node, express, mongodb, HTML+CSS+JS</p> 
+            
+            <p>Portfolio : <a href="https://amoghtripathi.github.io/">(here)</a> Normal site with HTML, CSS, JS & BootStrap.</p>
+            <div id="btnout"><span class="noselect"><a href="Amogh_Res.pdf">Download Resume</a></span><div id="circle"></div></div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="content">
+            <h1>Work Experiernce: 10 months</h1>
+            <p>as a Project Engineer in Wipro Technologies.</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="content">
+            <h1>Ok BYe BYE</h1>
+            <p>have a good day !</p>
+        </div>
+    </section>
+
+    <div id="set-height"></div>
+
+    <video id="v0" tabindex="0", autobuffer preload>
+        <source type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' src="fingers.mp4"></source>
+    </video>
+
+    <script src="sticky.js"></script>
+
+    <script>
+
+    enterView({
+        selector: 'section',
+        enter: function(el) {
+            el.classList.add('entered');
+        }
+    })
+
+    var frameNumber = 0, // start video at frame 0
+        // lower numbers = faster playback
+        playbackConst = 1000, 
+        // get page height from video duration
+        setHeight = document.getElementById("set-height"), 
+        // select video element         
+        vid = document.getElementById('v0'); 
+        // var vid = $('#v0')[0]; // jquery option
+
+    // dynamically set the page height according to video length
+    vid.addEventListener('loadedmetadata', function() {
+    setHeight.style.height = Math.floor(vid.duration) * playbackConst + "px";
+    });
+
+    // Use requestAnimationFrame for smooth playback
+    function scrollPlay(){  
+    var frameNumber  = window.pageYOffset/playbackConst;
+    vid.currentTime  = frameNumber;
+    window.requestAnimationFrame(scrollPlay);
+    }
+
+    window.requestAnimationFrame(scrollPlay);
+
+    </script>
+
+</body>
+</html>
