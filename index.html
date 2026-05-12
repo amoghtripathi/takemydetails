@@ -106,13 +106,34 @@
     });
 
     // Use requestAnimationFrame for smooth playback
-    function scrollPlay(){  
-    var frameNumber  = window.pageYOffset/playbackConst;
-    vid.currentTime  = frameNumber;
-    window.requestAnimationFrame(scrollPlay);
+    // function scrollPlay(){  
+    // var frameNumber  = window.pageYOffset/playbackConst;
+    // vid.currentTime  = frameNumber;
+    // window.requestAnimationFrame(scrollPlay);
+    // }
+
+    // window.requestAnimationFrame(scrollPlay);
+
+    let lastScroll = 0;
+
+    function scrollPlay() {
+
+    const frameNumber = window.pageYOffset / playbackConst;
+
+    if (Math.abs(frameNumber - lastScroll) > 0.01) {
+
+        vid.currentTime = Math.min(
+            vid.duration,
+            frameNumber
+        );
+
+        lastScroll = frameNumber;
     }
 
     window.requestAnimationFrame(scrollPlay);
+}
+
+window.requestAnimationFrame(scrollPlay);
 
     </script>
 
