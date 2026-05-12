@@ -96,92 +96,61 @@
 
     <script>
 
-    enterView({
-        selector: 'section',
-        enter: function(el) {
-            el.classList.add('entered');
-        }
-    })
+enterView({
+    selector: 'section',
+    enter: function(el) {
+        el.classList.add('entered');
+    }
+});
 
-    var frameNumber = 0, // start video at frame 0
-        // lower numbers = faster playback
-        playbackConst = 1000, 
-        // get page height from video duration
-        setHeight = document.getElementById("set-height"), 
-        // select video element         
-        //vid = document.getElementById('v0'); 
-        let vidLandscape = document.getElementById("v-landscape");
-        let vidPortrait = document.getElementById("v-portrait");
+let playbackConst = 1000;
+let setHeight = document.getElementById("set-height");
 
-        let vid;
+let vidLandscape = document.getElementById("v-landscape");
+let vidPortrait = document.getElementById("v-portrait");
 
-        // choose correct video
-        function setVideo(){
-        vid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
-        }
+let vid;
 
-        setVideo();
-        window.addEventListener("resize", setVideo);
+// ✅ choose correct video
+function setVideo() {
+    vid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
+}
 
-    // dynamically set the page height according to video length
-    // vid.addEventListener('loadedmetadata', function() {
-    // setHeight.style.height = Math.floor(vid.duration) * playbackConst + "px";
-    // });
-        function setHeightFunction(){
+setVideo();
+window.addEventListener("resize", setVideo);
 
-        let activeVid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
+// ✅ set scroll height properly
+function setHeightFunction() {
 
-        activeVid.addEventListener("loadedmetadata", function(){
+    let activeVid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
+
+    activeVid.addEventListener("loadedmetadata", function () {
         setHeight.style.height =
             Math.floor(activeVid.duration) * playbackConst + "px";
-        });
-    }
+    });
+}
 
 setHeightFunction();
 
-    // Use requestAnimationFrame for smooth playback
-    // function scrollPlay(){  
-    // var frameNumber  = window.pageYOffset/playbackConst;
-    // vid.currentTime  = frameNumber;
-    // window.requestAnimationFrame(scrollPlay);
-    // }
+// re-run height setup on resize (important fix)
+window.addEventListener("resize", setHeightFunction);
 
-    // window.requestAnimationFrame(scrollPlay);
+// ✅ scroll video sync
+let lastScroll = 0;
 
-//     let lastScroll = 0;
-
-//     function scrollPlay() {
-
-//     const frameNumber = window.pageYOffset / playbackConst;
-
-//     if (Math.abs(frameNumber - lastScroll) > 0.01) {
-
-//         vid.currentTime = Math.min(
-//             vid.duration,
-//             frameNumber
-//         );
-
-//         lastScroll = frameNumber;
-//     }
-
-//     window.requestAnimationFrame(scrollPlay);
-// }
-
-// window.requestAnimationFrame(scrollPlay);
-
-    let lastScroll = 0;
-
-    function scrollPlay() {
+function scrollPlay() {
 
     const frameNumber = window.pageYOffset / playbackConst;
 
-    // reduce unnecessary updates on mobile
     if (
         Math.abs(frameNumber - lastScroll) > 0.03 &&
-        frameNumber <= vid.duration
+        vid
     ) {
+        vid.currentTime = Math.max(
+            0,
+            Math.min(frameNumber, vid.duration)
+        );
 
-        vid.currentTime = frameNumber;
         lastScroll = frameNumber;
     }
 
@@ -190,7 +159,6 @@ setHeightFunction();
 
 requestAnimationFrame(scrollPlay);
 
-    </script>
-
+</script>
 </body>
 </html>
