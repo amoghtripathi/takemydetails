@@ -333,9 +333,15 @@ section:nth-of-type(8){
         min-height: 80vh !important;
     }
 
-    #v0{
+    /* #v0{
         object-position: center;
-    }
+    } */
+	#v0{
+    object-fit: contain;
+    object-position: center center;
+    background: black;
+}
+	
 }
 
 /* EXTRA SMALL DEVICES */
