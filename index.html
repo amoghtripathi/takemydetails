@@ -70,15 +70,26 @@
     <div id="set-height"></div>
 
     <!-- <video id="v0" tabindex="0", autobuffer preload> -->
+    <!-- Desktop video -->
     <video 
-    id="v0"
-    tabindex="0"
+    id="v-landscape"
     muted
     playsinline
     webkit-playsinline
     preload="auto"
->
-        <source type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' src="fingers.mp4"></source>
+    >
+    <source src="fingers.mp4" type="video/mp4">
+    </video>
+
+<!-- Mobile video -->
+    <video 
+    id="v-portrait"
+    muted
+    playsinline
+    webkit-playsinline
+    preload="auto"
+    >
+    <source src="fingersROTATE.mp4" type="video/mp4">
     </video>
 
     <script src="sticky.js"></script>
@@ -98,13 +109,35 @@
         // get page height from video duration
         setHeight = document.getElementById("set-height"), 
         // select video element         
-        vid = document.getElementById('v0'); 
-        // var vid = $('#v0')[0]; // jquery option
+        //vid = document.getElementById('v0'); 
+        let vidLandscape = document.getElementById("v-landscape");
+        let vidPortrait = document.getElementById("v-portrait");
+
+        let vid;
+
+        // choose correct video
+        function setVideo(){
+        vid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
+        }
+
+        setVideo();
+        window.addEventListener("resize", setVideo);
 
     // dynamically set the page height according to video length
-    vid.addEventListener('loadedmetadata', function() {
-    setHeight.style.height = Math.floor(vid.duration) * playbackConst + "px";
-    });
+    // vid.addEventListener('loadedmetadata', function() {
+    // setHeight.style.height = Math.floor(vid.duration) * playbackConst + "px";
+    // });
+        function setHeightFunction(){
+
+        let activeVid = window.innerWidth <= 768 ? vidPortrait : vidLandscape;
+
+        activeVid.addEventListener("loadedmetadata", function(){
+        setHeight.style.height =
+            Math.floor(activeVid.duration) * playbackConst + "px";
+        });
+    }
+
+setHeightFunction();
 
     // Use requestAnimationFrame for smooth playback
     // function scrollPlay(){  
