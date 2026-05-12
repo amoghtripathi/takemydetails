@@ -193,6 +193,12 @@ section:nth-of-type(8){
 
 /* EXTRA SMALL DEVICES */
 
+@media (max-width: 600px) {
+	  video {
+	    aspect-ratio: 9 / 16;  /* mobile (portrait style) */
+	  }
+	}
+
 @media (max-width: 480px){
 
     h1{
