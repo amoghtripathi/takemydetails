@@ -115,26 +115,47 @@
 
     // window.requestAnimationFrame(scrollPlay);
 
+//     let lastScroll = 0;
+
+//     function scrollPlay() {
+
+//     const frameNumber = window.pageYOffset / playbackConst;
+
+//     if (Math.abs(frameNumber - lastScroll) > 0.01) {
+
+//         vid.currentTime = Math.min(
+//             vid.duration,
+//             frameNumber
+//         );
+
+//         lastScroll = frameNumber;
+//     }
+
+//     window.requestAnimationFrame(scrollPlay);
+// }
+
+// window.requestAnimationFrame(scrollPlay);
+
     let lastScroll = 0;
 
     function scrollPlay() {
 
     const frameNumber = window.pageYOffset / playbackConst;
 
-    if (Math.abs(frameNumber - lastScroll) > 0.01) {
+    // reduce unnecessary updates on mobile
+    if (
+        Math.abs(frameNumber - lastScroll) > 0.03 &&
+        frameNumber <= vid.duration
+    ) {
 
-        vid.currentTime = Math.min(
-            vid.duration,
-            frameNumber
-        );
-
+        vid.currentTime = frameNumber;
         lastScroll = frameNumber;
     }
 
-    window.requestAnimationFrame(scrollPlay);
+    requestAnimationFrame(scrollPlay);
 }
 
-window.requestAnimationFrame(scrollPlay);
+requestAnimationFrame(scrollPlay);
 
     </script>
 
